@@ -54,7 +54,7 @@ public:
     NodoBST* search(int val){
         return search(root, val);
     }
-    // Find
+    // FindMin
     NodoBST* FinMin(NodoBST* _ActualRoot){
         if(_ActualRoot == nullptr) return _ActualRoot;
         else if(_ActualRoot->left == nullptr){
@@ -62,6 +62,14 @@ public:
         }
         return FinMin(_ActualRoot->left);
         
+    }
+    // FindMax
+    NodoBST* FinMax(NodoBST* _ActualRoot){
+        if(_ActualRoot == nullptr) return _ActualRoot;
+        else if(_ActualRoot->right == nullptr){
+            return _ActualRoot;
+        }
+        return FinMax(_ActualRoot->right);
     }
 
     NodoBST* erase(NodoBST* &_ActualRoot, int _val){
