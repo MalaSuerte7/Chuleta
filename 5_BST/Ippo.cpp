@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector> // usar vector por el tiempo y para el valid
 using namespace std;
 
 struct NodoBST{
@@ -101,18 +102,80 @@ public:
     void erase(int val){
         erase(root, val); 
     }   
+// no mine -----------------------------------------------------
+    // In-order 
+    void inorderTraversal(NodoBST* _Actualroot, vector<int>& inorder) {
+        if (_Actualroot == nullptr) return;
+        inorderTraversal(_Actualroot->left, inorder);
+        inorder.push_back(_Actualroot->data);
+        inorderTraversal(_Actualroot->right, inorder);
+    }
+    // Post-order
+    void postorderTraversal(NodoBST* _Actualroot, vector<int>& postorder) {
+        if (_Actualroot == nullptr) return;
+        postorderTraversal(_Actualroot->left, postorder);
+        postorderTraversal(_Actualroot->right, postorder);
+        postorder.push_back(_Actualroot->data);
+    }
+    // Pre-order
+    void preorderTraversal(NodoBST* _Actualroot, vector<int>& preorder) {
+        if (_Actualroot == nullptr) return;
+        preorder.push_back(_Actualroot->data);
+        preorderTraversal(_Actualroot->left, preorder);
+        preorderTraversal(_Actualroot->right, preorder);
+    }
+
+    // Valid search tree 
+    bool isValidBST() {
+        vector<int> inorder;
+        inorderTraversal(root, inorder);
+        for (int i = 1; i < inorder.size(); ++i) {
+            if (inorder[i] <= inorder[i - 1]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    // Sumar nodos
+    int sumNodes(NodoBST* _ActualRoot){
+        if(_ActualRoot == nullptr) return 0;
+        return _ActualRoot->data + sumNodes(_ActualRoot->left) + sumNodes(_ActualRoot->right);
+    }
+
+    
 };
 
-int main(){
+int main() {
     Solution sol;
-    sol.insert(10); // agrega 3
-    // // cout << sol.root->data << endl; // verify
+    sol.insert(10);
     sol.insert(50);
     sol.insert(11);
     sol.insert(60);
     sol.insert(54);
-    // cout << (sol.root->right)->data << endl;
-    cout << sol.root->right->data << endl;
-    sol.erase(50);
-    cout << sol.root->right->data << endl;
-}   
+
+    vector<int> inorder;
+    sol.inorderTraversal(sol.root, inorder);
+    for (int val : inorder) {
+        cout << val << " ";
+    }
+    cout << endl;
+
+    vector<int> postorder;
+    sol.postorderTraversal(sol.root, postorder);
+    for (int val : postorder) {
+        cout << val << " ";
+    }
+    cout << endl;
+
+    vector<int> preorder;
+    sol.preorderTraversal(sol.root, preorder);
+    for (int val : preorder) {
+        cout << val << " ";
+    }
+    cout << endl;
+
+    cout << (sol.isValidBST() ? "Yes" : "No") << endl;
+
+    return 0;
+}
