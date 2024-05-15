@@ -4,7 +4,6 @@ using namespace std;
 
 struct NodoBST{
     int data;
-    NodoBST* father;
     NodoBST* right;
     NodoBST* left;
     NodoBST() : data(0), right(nullptr), left(nullptr){}
@@ -18,7 +17,7 @@ public:
     void insert(NodoBST* &_ActualRoot, int _val){
         if (_ActualRoot == nullptr) _ActualRoot = new NodoBST(_val);
         else{
-            if(_ActualRoot->data < _val ){ 
+             if(_ActualRoot->data < _val ){ 
                 insert(_ActualRoot->right, _val);
             } 
             else if (_val < _ActualRoot->data){
