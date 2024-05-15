@@ -218,6 +218,17 @@ public:
     bool isValidBST() {
         return isValidBSTUtil(root, INT_MIN, INT_MAX);
     }
+    // search
+    NodoAVL* search(int key) {
+        return search(root, key);
+    }
+
+    NodoAVL* search(NodoAVL* node, int key) {
+        if (node == nullptr || node->data == key) return node;
+        if (key < node->data) return search(node->left, key);
+        return search(node->right, key);
+    }
+
 };
 
 int main() {
@@ -250,6 +261,9 @@ int main() {
     cout << endl;
 
     cout << (sol.isValidBST() ? "Yes" : "No") << endl;
+
+    // try search
+    cout << "Search 50: " << (sol.search(52) != nullptr ? "Found" : "Not found") << endl;
 
     return 0;
 }
