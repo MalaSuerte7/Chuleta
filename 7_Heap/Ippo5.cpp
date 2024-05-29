@@ -92,13 +92,61 @@ struct minHeap{
       int i = size - 1;
       heapVec[i] = inon;
 
-      // update
+      // update -- heapfyup
       while(i != 0 && heapVec[parent(i)] > heapVec[i]){
         swap(heapVec[i], heapVec[parent(i)]);
         i = parent(i); // iterativamente
       }
     }
-    
+
+    void heapifyDown(int i){
+      int l = left(i);
+      int r = right(i);
+      int smallest = i;
+
+      if((l < size) && (heapVec[l] < heapVec[smallest])){
+        smallest = l;
+      }
+      if ((r < size) && (heapVec[r] < heapVec[smallest])){
+        smallest = r;
+      }
+      
+      if(smallest != i){
+        swap(heapVec[i], heapVec[smallest]);
+        heapifyDown(smallest);
+      }
+    }
+
+    int extracMin(){
+      if(size == 0){
+        cout << "Empty" << endl;
+      } else if(size==1){
+        size--;
+        return heapVec[0];
+      } else {
+        int min = heapVec[0];
+
+        heapVec[0] = heapVec[size - 1];
+        size--;
+        heapifyDown(0);
+
+        return min;
+      }
+    }
+
+    void printHeap(){
+      int power = 0;
+      int value = 1;
+      for (int i = 0; i < size; i++){
+        if(i == value){
+          cout << endl;
+          power+=1;
+          value+= (1<<power);
+        }
+        cout << heapVec[i] << " ";
+      }
+    cout << endl;
+    }
 };
 
 int main(){
