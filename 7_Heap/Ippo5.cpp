@@ -57,20 +57,48 @@ public:
 
 // Fin del Queue ---------------------------------------------------------------------
 
-// Inicio del heap -------------------------------------------------------------------
-struct MaxHeap{
+
+/*
     int val;
     MaxHeap* left;
     MaxHeap* right;
     MaxHeap() : val(0), left(nullptr), right(nullptr){}
     MaxHeap(int _val) : val(_val), left(nullptr), right(nullptr){}
-    // real metodos
+*/
+// Inicio del heap -------------------------------------------------------------------
+struct minHeap{
+    int size;
+    int capacity;
     vector<int> heapVec;
-    int parent(int num){ }
-    //
-    void insert(int val){
-        
+    // metodos preliminares
+    int parent(int nNum){return (nNum-1)/2; }
+    int left(int nNum){return 2*nNum + 1;}
+    int right(int nNum){ return 2*nNum + 2;}
+    // Preliminares para el insert
+
+    //Crear minHeap constructor
+    minHeap(int _capacity){
+      size = 0;
+      capacity = _capacity;
+      heapVec.resize(_capacity);
     }
+    //  
+    void insert(int inon){
+      if(size==capacity){
+        cout << "Max Capacity" << endl;
+        return;
+      }
+      size++;
+      int i = size - 1;
+      heapVec[i] = inon;
+
+      // update
+      while(i != 0 && heapVec[parent(i)] > heapVec[i]){
+        swap(heapVec[i], heapVec[parent(i)]);
+        i = parent(i); // iterativamente
+      }
+    }
+    
 };
 
 int main(){
