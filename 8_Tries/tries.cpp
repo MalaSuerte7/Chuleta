@@ -6,7 +6,6 @@ class TrieNode {
 public:
     vector<TrieNode*> children;
     bool isEndOfWord;
-
     TrieNode() : children(26, nullptr), isEndOfWord(false) {}
 };
 
