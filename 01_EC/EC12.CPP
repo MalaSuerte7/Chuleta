@@ -59,17 +59,15 @@ struct Stack {
 class MyStack {
     Stack* head;
 public:
-    MyStack() {
-        this->head = nullptr;
-    }
+    MyStack() : head(nullptr) {}
 
     void push(int x) {
         Stack* new_node = new Stack(x);
         if (head == nullptr) {
-            this->head = new_node;
+            head = new_node;
         } else {
-            new_node->prev = this->head;
-            this->head = new_node;
+            new_node->prev = head;
+            head = new_node;
         }
     }
 
@@ -88,10 +86,11 @@ public:
 };
 
 template <typename K, typename V>
-struct HashTable {
+class HashTable {
     int numBuckets;
     vector<vector<pair<K, V>>> table;
 
+public:
     HashTable() : numBuckets(1) {
         table.resize(numBuckets);
     }
@@ -100,11 +99,11 @@ struct HashTable {
         table.resize(numBuckets);
     }
 
-    int hashFunction(const int &key) {
+    int hashFunction(const int& key) const {
         return key % numBuckets;
     }
 
-    int hashFunction(const string &key) {
+    int hashFunction(const string& key) const {
         size_t hashValue = 0;
         for (char ch : key) {
             hashValue = hashValue * 31 + ch;
@@ -112,9 +111,9 @@ struct HashTable {
         return hashValue % numBuckets;
     }
 
-    void insert(const K &key, const V &value) {
+    void insert(const K& key, const V& value) {
         int bucketIndex = hashFunction(key);
-        for (auto &pair : table[bucketIndex]) {
+        for (auto& pair : table[bucketIndex]) {
             if (pair.first == key) {
                 pair.second = value;
                 return;
@@ -123,9 +122,9 @@ struct HashTable {
         table[bucketIndex].emplace_back(key, value);
     }
 
-    void remove(K &key) {
+    void remove(const K& key) {
         int bucketIndex = hashFunction(key);
-        auto &bucket = table[bucketIndex];
+        auto& bucket = table[bucketIndex];
         for (auto it = bucket.begin(); it != bucket.end(); ++it) {
             if (it->first == key) {
                 bucket.erase(it);
@@ -134,9 +133,9 @@ struct HashTable {
         }
     }
 
-    V search(const K &key) {
+    V search(const K& key) const {
         int bucketIndex = hashFunction(key);
-        for (const auto &pair : table[bucketIndex]) {
+        for (const auto& pair : table[bucketIndex]) {
             if (pair.first == key) {
                 return pair.second;
             }
@@ -144,18 +143,18 @@ struct HashTable {
         return V();
     }
 
-    void display() {
+    void display() const {
         for (int i = 0; i < numBuckets; ++i) {
             cout << "Bucket " << i << ": ";
-            for (const auto &pair : table[i]) {
+            for (const auto& pair : table[i]) {
                 cout << "[" << pair.first << ": " << pair.second << "] ";
             }
             cout << endl;
         }
     }
 
-    bool empty() {
-        for (const auto &bucket : table) {
+    bool empty() const {
+        for (const auto& bucket : table) {
             if (!bucket.empty()) {
                 return false;
             }
@@ -170,18 +169,18 @@ struct nGraph {
 };
 
 class Graph {
-public:
     HashTable<int, vector<nGraph*>> egid;
 
+public:
     Graph() {}
 
-    Graph(vector<vector<int>> pairs) {
-        for (vector<int> pair : pairs) {
+    Graph(const vector<vector<int>>& pairs) {
+        for (const vector<int>& pair : pairs) {
             insert(pair);
         }
     }
 
-    void insert(vector<int> _pair) {
+    void insert(const vector<int>& _pair) {
         int u = _pair[0];
         int v = _pair[1];
 
@@ -196,7 +195,7 @@ public:
         egid.search(v).push_back(new nGraph{u, {}});
     }
 
-    bool search(vector<int> _pair) {
+    bool search(const vector<int>& _pair) {
         int u = _pair[0];
         int v = _pair[1];
 
@@ -214,15 +213,14 @@ public:
     bool DFS(int start, int end) {
         MyStack stack;
         stack.push(start);
-        bool bo; //existe camino
 
         HashTable<int, bool> visited;
 
         while (!stack.empty()) {
             int vertex = stack.pop();
             if (!visited.search(vertex)) {
-                cout << vertex << " ";
                 visited.insert(vertex, true);
+                if (vertex == end) return true;
             }
 
             for (nGraph* neighbor : egid.search(vertex)) {
@@ -231,43 +229,43 @@ public:
                 }
             }
         }
-        cout << endl;
-        return bo;
+        return false;
     }
 };
 
 class Solution {
 public:
-    vector<bool> checkIfPrerequisite(int numCourses, vector<vector<int>>& prerequisites, vector<vector<int>>& queries) {
-        Graph* g = new Graph(prerequisites); // se arma el grafo
+    vector<bool> checkIfPrerequisite(int numCourses, const vector<vector<int>>& prerequisites, const vector<vector<int>>& queries) {
+        Graph g(prerequisites); // se arma el grafo
         vector<bool> rpts;
         // Se hace un DFS para encontrar el camino
-        for(auto val : queries){
-            rpts.push_back(g->DFS(val[0], val[1]));
+        for (const auto& val : queries) {
+            rpts.push_back(g.DFS(val[0], val[1]));
         }
         return rpts;
     }
 };
 
-/*
 int main() {
     Solution sol1;
     int numCourses1 = 2;
-    vector<vector<int>> prerequisites1 = {{1,0}};
-    vector<vector<int>> queries1 = {{0,1},{1,0}};
-    sol1.checkIfPrerequisite(numCourses1, prerequisites1, queries1);
-    // Output: {false},{true}
+    vector<vector<int>> prerequisites1 = {{1, 0}};
+    vector<vector<int>> queries1 = {{0, 1}, {1, 0}};
+    vector<bool> result1 = sol1.checkIfPrerequisite(numCourses1, prerequisites1, queries1);
+    for (bool res : result1) {
+        cout << (res ? "true" : "false") << " ";
+    }
     cout << endl;
+    
     Solution sol2;
     int numCourses2 = 3;
-    vector<vector<int>> prerequisites2 = {{1,2},{1,0},{2,0}};
-    vector<vector<int>> queries2 = {{1,0},{1,2}};
-    sol2.checkIfPrerequisite(numCourses2, prerequisites2, queries2);
-    // Output: {true},{true}
+    vector<vector<int>> prerequisites2 = {{1, 2}, {1, 0}, {2, 0}};
+    vector<vector<int>> queries2 = {{1, 0}, {1, 2}};
+    vector<bool> result2 = sol2.checkIfPrerequisite(numCourses2, prerequisites2, queries2);
+    for (bool res : result2) {
+        cout << (res ? "true" : "false") << " ";
+    }
+    cout << endl;
 
     return 0;
 }
-*/
-
-// Pregunta 3
-
