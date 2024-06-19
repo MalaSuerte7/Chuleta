@@ -62,6 +62,15 @@ struct HashTable {
             cout << endl;
         }
     }
+
+    bool empty() {
+        for (const auto &bucket : table) {
+            if (!bucket.empty()) {
+                return false;
+            }
+        }
+        return true;
+    }
 };
 
 int main() {
@@ -83,5 +92,25 @@ int main() {
     cout << "Tabla Hash después de eliminar 'ciudad':" << endl;
     hashTable.display();
 
+    cout << "¿Está vacía la tabla hash?: " << (hashTable.empty() ? "Sí" : "No") << endl;
+
     return 0;
 }
+
+/**
+ * Operaciones disponibles en la tabla hash:
+ * 
+ * 1. `insert(const K &key, const V &value)`: Inserta una clave y su valor asociado en la tabla hash.
+ *    - Si la clave ya existe, se actualiza el valor.
+ * 
+ * 2. `remove(const K &key)`: Elimina la clave y su valor asociado de la tabla hash.
+ *    - Si la clave no existe, no se realiza ninguna acción.
+ * 
+ * 3. `search(const K &key)`: Busca el valor asociado a una clave en la tabla hash.
+ *    - Devuelve el valor si la clave se encuentra, de lo contrario devuelve un valor por defecto.
+ * 
+ * 4. `display()`: Muestra el contenido de la tabla hash, imprimiendo cada bucket y los pares clave-valor que contiene.
+ * 
+ * 5. `empty()`: Verifica si la tabla hash está vacía.
+ *    - Devuelve `true` si todos los buckets están vacíos, de lo contrario devuelve `false`.
+ */
