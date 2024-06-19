@@ -1,5 +1,65 @@
 /* Integrantes: Alexis Raza - Francisco Calle - Jimena Mamani */
 // Pregunta 1
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class Solution {
+public:
+    void dfs(vector<vector<char>>& grid, int i, int j) {
+        // Si está fuera de los límites o es agua, salimos.
+        if (i < 0 || i >= grid.size() || j < 0 || j >= grid[0].size() || grid[i][j] == '0') {
+            return;
+        }
+
+        // Marcamos la celda como visitada (cambiando '1' a '0').
+        grid[i][j] = '0';
+
+        // Realizamos una llamada recursiva para todas las celdas adyacentes (arriba, abajo, izquierda, derecha).
+        dfs(grid, i - 1, j); // arriba
+        dfs(grid, i + 1, j); // abajo
+        dfs(grid, i, j - 1); // izquierda
+        dfs(grid, i, j + 1); // derecha
+    }
+
+    int numIslands(vector<vector<char>>& grid) {
+        int count = 0;
+        // Iteramos por cada celda de la matriz.
+        for (int i = 0; i < grid.size(); ++i) {
+            for (int j = 0; j < grid[0].size(); ++j) {
+                // Si encontramos una celda de tierra, incrementamos el contador y llamamos a DFS para marcar toda la isla.
+                if (grid[i][j] == '1') {
+                    dfs(grid, i, j);
+                    ++count;
+                }
+            }
+        }
+        return count;
+    }
+};
+
+int main() {
+    Solution sol;
+    
+    vector<vector<char>> grid1 = {
+        {'1', '1', '1', '1', '0'},
+        {'1', '1', '0', '1', '0'},
+        {'1', '1', '0', '0', '0'},
+        {'0', '0', '0', '0', '0'}
+    };
+    cout << "Número de islas en grid1: " << sol.numIslands(grid1) << endl; // Output: 1
+    
+    vector<vector<char>> grid2 = {
+        {'1', '1', '0', '0', '0'},
+        {'1', '1', '0', '0', '0'},
+        {'0', '0', '1', '0', '0'},
+        {'0', '0', '0', '1', '1'}
+    };
+    cout << "Número de islas en grid2: " << sol.numIslands(grid2) << endl; // Output: 3
+
+    return 0;
+}
 
 // Pregunta 2
 #include <iostream>
