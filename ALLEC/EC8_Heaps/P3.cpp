@@ -1,6 +1,4 @@
-
-// MAL
-
+// Problema 3
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -68,53 +66,41 @@ public:
             return min;
         }
     }
-
-    int min() {
-        return heap[0];
-    }
 };
 
-class KthLargest {
-private:
-    int kesimo;
-    minHeap firstHeap;
-
+class Solution {
 public:
-    KthLargest(int k, vector<int>& nums) : firstHeap(nums.size()) {
-        kesimo = k;
-        // crear minHeap
-        for (int i = 0; i < nums.size(); i++) {
-            firstHeap.insert(nums[i]);
-        }
-    }
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+        int N = matrix.size() * matrix[0].size();
+        minHeap heap(N);
 
-    int add(int val) {
-        firstHeap.insert(val);
-        for (int i = 0; i < kesimo - 1; i++) {
-            firstHeap.extractMin();
+        for (int i = 0; i < matrix.size(); i++) {
+            for (int j = 0; j < matrix[0].size(); j++) {
+                heap.insert(matrix[i][j]);
+            }
         }
-        return firstHeap.extractMin();
+
+        for (int i = 0; i < k - 1; i++) {
+            heap.extractMin();
+        }
+
+        return heap.extractMin();
     }
 };
 
-/**
-* Your KthLargest object will be instantiated and called as such:
-* KthLargest* obj = new KthLargest(k, nums);
-* int param_1 = obj->add(val);
-*/
+// Tests
 
-// 2, *3, 4, 5, 8
-// min heap -> sacatop(add -> val veces) y retornalo
-
-/*
 int main() {
-    KthLargest kthLargest = KthLargest(3, {4, 5, 8, 2});
-    // cout << kthLargest.add(3); // return 4
-    // cout << kthLargest.add(5); // return 5
-    // cout << kthLargest.add(10); // return 5
-    // cout << kthLargest.add(9); // return 8
-    // cout << kthLargest.add(4); // return 8
+    Solution s;
+
+    // matriz 1
+    vector<vector<int>> matrix = {{1, 5, 9}, {10, 11, 13}, {12, 13, 15}};
+    cout << s.kthSmallest(matrix, 8) << endl; // 13 
+
+    // matriz 2
+    vector<vector<int>> matrix2 = {{-5}};
+    cout << s.kthSmallest(matrix2, 1) << endl; // -5
 
     return 0;
 }
-*/
+

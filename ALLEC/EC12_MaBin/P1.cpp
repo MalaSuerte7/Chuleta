@@ -1,4 +1,3 @@
-/* Integrantes: Alexis Raza - Francisco Calle - Jimena Mamani */
 // Pregunta 1
 #include <iostream>
 #include <vector>

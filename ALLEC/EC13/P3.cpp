@@ -46,15 +46,15 @@ public:
     }
 };
 
-// int main() {
-//     Solution sol;
+int main() {
+    Solution sol;
     
-//     vector<vector<int>> grid1 = {{1,2,3},{4,5,6},{7,8,9}};
-//     cout << sol.minCost(grid1) << endl; // esperado: 4
+    vector<vector<int>> grid1 = {{1,2,3},{4,5,6},{7,8,9}};
+    cout << sol.minCost(grid1) << endl; // esperado: 4
     
-//     vector<vector<int>> grid2 = {{1,2,3},{4,5,6}};
-//     cout << sol.minCost(grid2) << endl; // esperado: 3
+    vector<vector<int>> grid2 = {{1,2,3},{4,5,6}};
+    cout << sol.minCost(grid2) << endl; // esperado: 3
     
-//     vector<vector<int>> grid3 = {{1}};
-//     cout << sol.minCost(grid3) << endl; // esperado: 0
-// }
+    vector<vector<int>> grid3 = {{1}};
+    cout << sol.minCost(grid3) << endl; // esperado: 0
+}

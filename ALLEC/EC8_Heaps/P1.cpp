@@ -1,6 +1,5 @@
 #include <vector>
 #include <iostream>
-
 using namespace std;
 
 template <typename T>
@@ -107,7 +106,7 @@ int main()
 
     auto res = Solution().kWeakestRows(mat1, 3);
     for (auto e : res) cout << e << " ";
-    cout << endl;
+    cout << endl;   // [2,0,3]
 
     // Test 2
     vector<vector<int>> mat2 = {
@@ -119,7 +118,7 @@ int main()
 
     res = Solution().kWeakestRows(mat2, 2);
     for (auto e : res) cout << e << " ";
-    cout << endl;
+    cout << endl; // [0,2]
 
     return 0;
 }

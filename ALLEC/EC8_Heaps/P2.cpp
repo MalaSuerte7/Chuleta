@@ -1,9 +1,7 @@
-
-// Problema 3
-
-#include <iostream>
+// Solución sin queue
 #include <vector>
-#include <algorithm>
+#include <iostream>
+
 using namespace std;
 
 class minHeap {
@@ -68,41 +66,47 @@ public:
             return min;
         }
     }
-};
 
-class Solution {
-public:
-    int kthSmallest(vector<vector<int>>& matrix, int k) {
-        int N = matrix.size() * matrix[0].size();
-        minHeap heap(N);
+    int getMin() {
+        return heap[0];
+    }
 
-        for (int i = 0; i < matrix.size(); i++) {
-            for (int j = 0; j < matrix[0].size(); j++) {
-                heap.insert(matrix[i][j]);
-            }
-        }
-
-        for (int i = 0; i < k - 1; i++) {
-            heap.extractMin();
-        }
-
-        return heap.extractMin();
+    int getSize() {
+        return size;
     }
 };
 
-// Tests
+class KthLargest {
+public:
+    KthLargest(int k, vector<int>& nums) : k(k), firstHeap(k) {
+        for (int num : nums) {
+            add(num);
+        }
+    }
 
+    int add(int val) {
+        if (firstHeap.getSize() < k) {
+            firstHeap.insert(val);
+        } else if (val > firstHeap.getMin()) {
+            firstHeap.extractMin();
+            firstHeap.insert(val);
+        }
+        return firstHeap.getMin();
+    }
+
+private:
+    int k;
+    minHeap firstHeap;
+};
+
+// Ejemplo de uso
 int main() {
-    Solution s;
-
-    // matriz 1
-    vector<vector<int>> matrix = {{1, 5, 9}, {10, 11, 13}, {12, 13, 15}};
-    cout << s.kthSmallest(matrix, 8) << endl;
-
-    // matriz 2
-    vector<vector<int>> matrix2 = {{-5}};
-    cout << s.kthSmallest(matrix2, 1) << endl;
-
+    vector<int> nums = {4, 5, 8, 2};
+    KthLargest kthLargest(3, nums);
+    cout << kthLargest.add(3) << endl;  // return 4
+    cout << kthLargest.add(5) << endl;  // return 5
+    cout << kthLargest.add(10) << endl; // return 5
+    cout << kthLargest.add(9) << endl;  // return 8
+    cout << kthLargest.add(4) << endl;  // return 8
     return 0;
 }
-

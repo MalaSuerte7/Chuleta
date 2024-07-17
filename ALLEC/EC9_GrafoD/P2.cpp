@@ -108,7 +108,7 @@ int main() {
     Solution sol;
 
     vector<vector<int>> edges = {{0,1},{1,2},{2,0}};
-    cout << sol.problem2(3, edges, 0, 2);
+    cout << sol.problem2(3, edges, 0, 2) << endl;
     vector<vector<int>> edges2 = {{0,1},{0,2},{3,5},{5,4},{4,3}};
     cout << sol.problem2(6, edges2, 0, 5);
 }

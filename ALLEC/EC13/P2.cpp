@@ -105,18 +105,18 @@ public:
 
 // Tests
 
-// int main() {
-//     Solution sol;
+int main() {
+    Solution sol;
     
-//     vector<vector<int>> edges = {{0,1},{1,2},{0,2}};
-//     vector<double> succProb = {0.5, 0.5, 0.2};
-//     cout << sol.maxProbability(3, edges, succProb, 0, 2) << endl; // esperado: 0.25
+    vector<vector<int>> edges = {{0,1},{1,2},{0,2}};
+    vector<double> succProb = {0.5, 0.5, 0.2};
+    cout << sol.maxProbability(3, edges, succProb, 0, 2) << endl; // esperado: 0.25
     
-//     vector<vector<int>> edges2 = {{0,1},{1,2},{0,2}};
-//     vector<double> succProb2 = {0.5, 0.5, 0.3};
-//     cout << sol.maxProbability(3, edges2, succProb2, 0, 2) << endl; // esperado: 0.3
+    vector<vector<int>> edges2 = {{0,1},{1,2},{0,2}};
+    vector<double> succProb2 = {0.5, 0.5, 0.3};
+    cout << sol.maxProbability(3, edges2, succProb2, 0, 2) << endl; // esperado: 0.3
     
-//     vector<vector<int>> edges3 = {{0,1}};
-//     vector<double> succProb3 = {0.5};
-//     cout << sol.maxProbability(3, edges3, succProb3, 0, 2) << endl; // esperado: 0.0
-// }
+    vector<vector<int>> edges3 = {{0,1}};
+    vector<double> succProb3 = {0.5};
+    cout << sol.maxProbability(3, edges3, succProb3, 0, 2) << endl; // esperado: 0.0
+}
